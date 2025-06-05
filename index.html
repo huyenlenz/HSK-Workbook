@@ -663,11 +663,7 @@
         </div>
       </div>
 
-      <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
-        <button class="save-btn" onclick="saveAnswers()">Save Answers</button>
-        <button class="save-btn" onclick="downloadAnswers()" style="background: #28a745;">Download File</button>
-        <button class="save-btn" onclick="copyForGoogleDocs()" style="background: #007bff;">Copy for Google Docs</button>
-      </div>
+      <button class="save-btn" onclick="downloadAnswers()" style="background: #28a745;">Download Answers</button>
     </div>
   </div>
 
@@ -719,8 +715,7 @@
       
       // For now, only lesson 5 has content
       if (level === 'HSK4' && lessonNum === 5) {
-        // Content is already loaded, now load saved answers
-        loadSavedAnswers(level, lessonNum);
+        // Content is already loaded
         return;
       }
       
@@ -736,135 +731,78 @@
       `;
     }
 
-    function loadSavedAnswers(level, lessonNum) {
-      const savedLessons = JSON.parse(localStorage.getItem('hskExercises') || '{}');
-      const lessonKey = `${level}_Lesson${lessonNum}`;
-      const savedData = savedLessons[lessonKey];
-      
-      if (savedData && savedData.answers) {
-        const answers = savedData.answers;
-        
-        // Load dropdown answers
-        for (let i = 23; i <= 43; i++) {
-          const select = document.getElementById(`q${i}`);
-          if (select && answers[`q${i}`]) {
-            select.value = answers[`q${i}`];
-          }
-        }
-        
-        // Load text input answers
-        for (let i = 31; i <= 34; i++) {
-          const input = document.getElementById(`q${i}`);
-          if (input && answers[`q${i}`]) {
-            input.value = answers[`q${i}`];
-          }
-        }
-        
-        for (let i = 44; i <= 48; i++) {
-          const input = document.getElementById(`q${i}`);
-          if (input && answers[`q${i}`]) {
-            input.value = answers[`q${i}`];
-          }
-        }
-        
-        // Load notes
-        if (answers.vocabularyNotes) {
-          document.getElementById('vocabulary-notes').value = answers.vocabularyNotes;
-        }
-        if (answers.grammarNotes) {
-          document.getElementById('grammar-notes').value = answers.grammarNotes;
-        }
-        
-        console.log(`Loaded saved answers for ${level} Lesson ${lessonNum}`);
-      }
-    }
-
-    function saveAnswers() {
-      const answers = collectAnswers();
-      
-      // Save to localStorage for persistence
-      const saveData = {
-        level: currentLevel,
-        lesson: currentLesson,
-        timestamp: new Date().toISOString(),
-        answers: answers
-      };
-      
-      const savedLessons = JSON.parse(localStorage.getItem('hskExercises') || '{}');
-      const lessonKey = `${currentLevel}_Lesson${currentLesson}`;
-      savedLessons[lessonKey] = saveData;
-      localStorage.setItem('hskExercises', JSON.stringify(savedLessons));
-      
-      console.log(`Saving ${currentLevel} Lesson ${currentLesson}:`, answers);
-      
-      // Show success message
-      const btn = event.target;
-      const originalText = btn.textContent;
-      btn.textContent = 'Saved!';
-      btn.style.background = '#28a745';
-      
-      setTimeout(() => {
-        btn.textContent = originalText;
-        btn.style.background = '#ff6b6b';
-      }, 2000);
-    }
-
-    function collectAnswers() {
-      const answers = {};
-      
-      // Collect dropdown answers
-      for (let i = 23; i <= 43; i++) {
-        const select = document.getElementById(`q${i}`);
-        if (select && select.value) answers[`q${i}`] = select.value;
-      }
-      
-      // Collect text input answers
-      for (let i = 31; i <= 34; i++) {
-        const input = document.getElementById(`q${i}`);
-        if (input && input.value) answers[`q${i}`] = input.value;
-      }
-      
-      for (let i = 44; i <= 48; i++) {
-        const input = document.getElementById(`q${i}`);
-        if (input && input.value) answers[`q${i}`] = input.value;
-      }
-      
-      // Collect notes
-      const vocabNotes = document.getElementById('vocabulary-notes').value;
-      const grammarNotes = document.getElementById('grammar-notes').value;
-      
-      if (vocabNotes) answers.vocabularyNotes = vocabNotes;
-      if (grammarNotes) answers.grammarNotes = grammarNotes;
-      
-      return answers;
-    }
-
     function downloadAnswers() {
-      const answers = collectAnswers();
       const timestamp = new Date();
       
       let content = `HSK ${currentLevel.replace('HSK', '')} - Lesson ${currentLesson}\n`;
       content += `Completed: ${timestamp.toLocaleDateString()} ${timestamp.toLocaleTimeString()}\n`;
-      content += `${'='.repeat(50)}\n\n`;
+      content += `${'='.repeat(60)}\n\n`;
       
       // Add notes
-      if (answers.vocabularyNotes) {
-        content += `VOCABULARY NOTES:\n${answers.vocabularyNotes}\n\n`;
-      }
-      if (answers.grammarNotes) {
-        content += `GRAMMAR NOTES:\n${answers.grammarNotes}\n\n`;
-      }
+      const vocabNotes = document.getElementById('vocabulary-notes').value;
+      const grammarNotes = document.getElementById('grammar-notes').value;
       
-      // Add answers
-      content += `ANSWERS:\n`;
+      content += `LESSON NOTES\n`;
+      content += `${'-'.repeat(30)}\n`;
+      content += `Vocabulary Notes: ${vocabNotes || 'No notes yet'}\n\n`;
+      content += `Grammar Notes: ${grammarNotes || 'No notes yet'}\n\n`;
+      
+      // Question data with text
+      const questionData = {
+        23: { text: "现在坐电梯的人（ ）很多，咖啡馆就在二层，我们走上去吧。", type: "select" },
+        24: { text: "那件衣服（ ）后只要80元，很便宜。", type: "select" },
+        25: { text: "你去买啤酒吗？（ ）帮我买一盒牛奶吧。", type: "select" },
+        26: { text: "这张山水画放在房间里（ ）肯定不错，就买它了。", type: "select" },
+        27: { text: "A: 爷爷，您换洗衣机了？ B: 不光是洗衣机，你去房间里看看，我把（ ）也换了。", type: "select" },
+        28: { text: "A: 还有这么多菜没吃完，太（ ）了。 B: 那把服务员叫来，我们都带回去吧。", type: "select" },
+        29: { text: "A: 看（ ）你对这里很熟悉。 B: 当然了，我在这儿住了差不多十年，去年才搬走的。", type: "select" },
+        30: { text: "A: 你这双鞋在哪儿买的？看上去（ ）不错。 B: 我也不知道，我爱人给我买的。", type: "select" },
+        31: { text: "Arrange: A 另外，价格还便宜 B 现在网上购物很流行 C 你在网上买的东西会送到你办公室或者家里", type: "input" },
+        32: { text: "Arrange: A 这儿离地铁站很近，附近也有很多公共汽车站 B 但房价可不便宜 C 所以，别看房子有点儿旧", type: "input" },
+        33: { text: "Arrange: A 但我还是一眼就认出了他 B 虽然毕业以后我们存了20多年没见面了 C 因为他的样子儿子没什么变化", type: "input" },
+        34: { text: "Arrange: A 我打算送她一个 B 妹妹很早之前就想买个照相机 C 下个月一号正好她过生日", type: "input" },
+        35: { text: "现在在网上几乎什么都可以买到...这段话主要介绍什么？", type: "select" },
+        36: { text: "说话虽然是生活中很普通的事...根据这段话，不能肯定的事：", type: "select" },
+        37: { text: "人们很容易被便宜的东西吸引...人们为什么会买一些不需要的东西？", type: "select" },
+        38: { text: "有些人喜欢根据别人的喜好来选购衣服...这段话告诉我们应该选什么样的衣服？", type: "select" },
+        39: { text: "了解顾客的实际需要十分重要...除了质量和价格，顾客还会考虑：", type: "select" },
+        40: { text: "在节假日，我们经常会看到商场举办各种打折活动...节假日商场打折是为了：", type: "select" },
+        41: { text: "根据这段话，买东西应该考虑：", type: "select" },
+        42: { text: "买衣服只考虑便宜当然不好...她认为，买衣服：", type: "select" },
+        43: { text: "根据这段话，可以知道什么？", type: "select" },
+        44: { text: "Arrange words: 不错 这台 质量 洗衣机 的", type: "input" },
+        45: { text: "Arrange words: 不会 肯定 他 同意你这么做", type: "input" },
+        46: { text: "Arrange words: 流行的 音乐 这是现在 最", type: "input" },
+        47: { text: "Arrange words: 不得不 他 重新 考虑这件事", type: "input" },
+        48: { text: "Arrange words: 普通话 不太 我的 说得 标准", type: "input" }
+      };
+      
+      // Add all questions and answers
+      content += `QUESTIONS AND ANSWERS\n`;
+      content += `${'-'.repeat(30)}\n`;
+      
       for (let i = 23; i <= 48; i++) {
-        if (answers[`q${i}`]) {
-          content += `Question ${i}: ${answers[`q${i}`]}\n`;
+        const questionInfo = questionData[i];
+        let answer = "No answer yet";
+        
+        if (questionInfo.type === "select") {
+          const select = document.getElementById(`q${i}`);
+          if (select && select.value) {
+            answer = select.value;
+          }
+        } else if (questionInfo.type === "input") {
+          const input = document.getElementById(`q${i}`);
+          if (input && input.value.trim()) {
+            answer = input.value.trim();
+          }
         }
+        
+        content += `${i}. ${questionInfo.text}\n`;
+        content += `    Answer: ${answer}\n\n`;
       }
       
       // Create and download file
-      const blob = new Blob([content], { type: 'text/plain' });
+      const blob = new Blob([content], { type: 'text/plain; charset=utf-8' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -884,69 +822,6 @@
       }, 2000);
     }
 
-    function copyForGoogleDocs() {
-      const answers = collectAnswers();
-      const timestamp = new Date();
-      
-      let content = `HSK ${currentLevel.replace('HSK', '')} - Lesson ${currentLesson}\n`;
-      content += `Completed: ${timestamp.toLocaleDateString()} ${timestamp.toLocaleTimeString()}\n\n`;
-      
-      // Add notes in a structured format
-      if (answers.vocabularyNotes || answers.grammarNotes) {
-        content += `LESSON NOTES\n`;
-        content += `${'─'.repeat(30)}\n`;
-        
-        if (answers.vocabularyNotes) {
-          content += `📝 Vocabulary:\n${answers.vocabularyNotes}\n\n`;
-        }
-        if (answers.grammarNotes) {
-          content += `📚 Grammar:\n${answers.grammarNotes}\n\n`;
-        }
-      }
-      
-      // Add answers in a clean format
-      content += `EXERCISE ANSWERS\n`;
-      content += `${'─'.repeat(30)}\n`;
-      
-      for (let i = 23; i <= 48; i++) {
-        if (answers[`q${i}`]) {
-          content += `${i}. ${answers[`q${i}`]}\n`;
-        }
-      }
-      
-      // Copy to clipboard
-      navigator.clipboard.writeText(content).then(() => {
-        // Show success message
-        const btn = event.target;
-        const originalText = btn.textContent;
-        btn.textContent = 'Copied!';
-        
-        // Show instructions
-        alert('Content copied to clipboard!\n\nTo save in Google Docs:\n1. Open Google Docs (docs.google.com)\n2. Create a new document\n3. Paste (Ctrl+V) the content\n4. Save the document');
-        
-        setTimeout(() => {
-          btn.textContent = originalText;
-        }, 2000);
-      }).catch(() => {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = content;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        
-        const btn = event.target;
-        const originalText = btn.textContent;
-        btn.textContent = 'Copied!';
-        alert('Content copied! Paste it into Google Docs.');
-        
-        setTimeout(() => {
-          btn.textContent = originalText;
-        }, 2000);
-      });
-    }
-
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
       // Set focus styles
@@ -959,9 +834,6 @@
           this.style.borderColor = '#ddd';
         });
       });
-
-      // Load saved answers for current lesson
-      loadSavedAnswers(currentLevel, currentLesson);
     });
   </script>
 </body>

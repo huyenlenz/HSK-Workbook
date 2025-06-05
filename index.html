@@ -92,6 +92,16 @@
       color: #ff6b6b;
     }
 
+    .lesson-btn.has-dialogues {
+      border: 2px solid #28a745;
+      background: #d4edda;
+    }
+
+    .lesson-btn.has-dialogues:hover, .lesson-btn.has-dialogues.active {
+      background: white;
+      color: #28a745;
+    }
+
     .content {
       padding: 30px;
     }
@@ -151,6 +161,67 @@
     .note-textarea:focus {
       outline: none;
       border-color: #ff6b6b;
+    }
+
+    /* Dialogue Styles */
+    .dialogues-section {
+      margin-bottom: 30px;
+    }
+
+    .dialogues-title {
+      color: #28a745;
+      font-weight: 600;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dialogue-container {
+      background: #f8fff8;
+      border: 2px solid #d4edda;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .dialogue-header {
+      background: #28a745;
+      color: white;
+      padding: 12px 15px;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .dialogue-content {
+      padding: 15px;
+    }
+
+    .dialogue-line {
+      background: white;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      padding: 12px 15px;
+      margin-bottom: 8px;
+      line-height: 1.7;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .dialogue-line:hover {
+      background: #f8f9fa;
+      border-color: #28a745;
+    }
+
+    .dialogue-line:last-child {
+      margin-bottom: 0;
+    }
+
+    .dialogue-speaker {
+      color: #28a745;
+      font-weight: 600;
+      margin-right: 8px;
     }
 
     .exercises {
@@ -276,6 +347,32 @@
       font-size: 0.85rem;
     }
 
+    .content-type-indicator {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .content-indicator {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .content-indicator.dialogues {
+      background: #d4edda;
+      color: #28a745;
+      border: 2px solid #28a745;
+    }
+
+    .content-indicator.exercises {
+      background: #f8d7da;
+      color: #dc3545;
+      border: 2px solid #dc3545;
+    }
+
     @media (max-width: 768px) {
       .content {
         padding: 20px;
@@ -287,6 +384,11 @@
 
       .lesson-selector {
         justify-content: center;
+      }
+
+      .content-type-indicator {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -326,7 +428,7 @@
         </div>
       </div>
 
-      <div class="exercises" id="lesson-content">
+          <div class="exercises" id="lesson-content">
         <!-- Lesson content will be loaded here -->
       </div>
 
@@ -366,6 +468,114 @@
       }
     };
 
+    // Dialogue database
+   const dialogueDatabase = {
+  lesson4: [ // Work & Career lesson
+    { 
+      title: "对话1：小林和小李聊小李的工作", 
+      content: [ 
+        "小林：听说你又换工作了？今年已经换了三次工作了吧？", 
+        "小李：别提了！我以为新工作比以前的好，没想到还没有以前好呢。", 
+        "小林：上次那份工作你只做了两个月就离开了，其实，完全适应一个新的工作需要一年时间，所以，经常换工作不一定好。", 
+        "小李：我也明白。但是那份工作的收入太少了！", 
+        "小林：你才到新公司，不要太急着赚钱，多学习才是最重要的。", 
+        "小李：好。我一定会努力把现在这份工作做好。" 
+      ] 
+    }, 
+    { 
+      title: "对话2：王经理和小李在说工作", 
+      content: [ 
+        "王经理：那份调查还要多长时间才能做完？", 
+        "小李：按原来的计划应该是两周，但是我们可以提前完成。周末保证做完。", 
+        "王经理：更快就更好工作。虽然，但你们也要注意身体呀。", 
+        "小李：谢谢您！现在有很多事情等着我做，真不知道该先做哪个好。", 
+        "王经理：每天早上我都把当天计划要做的事情写在笔记本上，提醒自己安排好时间。你也可以试试这样做。", 
+        "小李：这个办法真不错！这样我就不会手忙脚乱了。" 
+      ] 
+    }, 
+    { 
+      title: "对话3：王经理和马经理在说工作", 
+      content: [ 
+        "王经理：什么事让你这么高兴啊？", 
+        "马经理：我们和上次那个公司的生意终于谈成了。", 
+        "王经理：太好了！你工作那么努力，公司会越来越好的。", 
+        "马经理：我原来以为做生意很简单，后来才发现其实并不容易，现在赚钱越来越难了。", 
+        "王经理：慢慢来，万事开头难，重要的是要多积累经验。", 
+        "马经理：我相信经过我们大家的努力，公司的生意会越做越大，一切都会好的。" 
+      ] 
+    }, 
+    { 
+      title: "对话4：工作完成总结", 
+      content: [ 
+        "我们今年的工作都已经按照计划完成了。这一段时间，尽管工作很紧张，中间也遇到了很多困难，但是因为有大家的努力，我们成功地解决了问题，顺利地完成了工作，非常感谢大家对我的帮助！", 
+        "另外，马经理让我告诉大家一个好消息，因为大家按时完成了工作，公司决定这个月给每人多发三千元奖金。感谢大家这三个多月的努力工作，希望明年能有更大的成绩！" 
+      ] 
+    }, 
+    { 
+      title: "对话5：年轻人刚开始工作", 
+      content: [ 
+        "年轻人刚开始工作的时候，不要太急着赚钱，不要眼睛里只有工资和奖金。在工作的前几年，重要的是丰富自己的工作经验，学习与同事交流的方法，积累专业知识，这些比收入重要多了。", 
+        "但是很多时候，我们不得不去做一些自己不愿意做甚至是非常不喜欢的工作。这时，我们最需要的就是对工作的责任心。一个人即使能力再高，经验再丰富，如果对工作没有责任心，也很难把工作做好。" 
+      ] 
+    } 
+  ],
+  
+  // ✅ CORRECT: lesson6 should be at the same level as lesson4
+  lesson6: [ // Shopping lesson
+    { 
+      title: "对话1：张远和李进聊李进昨晚的购物经历", 
+      content: [ 
+        "张远：昨天晚上我给你打电话一直没人接，你忙什么呢？", 
+        "李进：昨天妻子让我陪她去超市买菜汁。我把手机忘在家里了。", 
+        "张远：买这么点儿东西也用不了那么长时间啊！", 
+        "李进：我们先去逛了会儿商场。一进门，售货员就热情地为我们介绍、介绍那、她买了一条裤子、一件衬衫、两双袜子，然后我们就高高兴兴地回家了。", 
+        "张远：买东西时我只看自己想买的，而且喜欢自己看、自己选，不希望被别人打扰。", 
+        "李进：是啊！回家以后，我才发现，竟然忘了去商场的超市买菜汁！" 
+      ] 
+    }, 
+    { 
+      title: "对话2：王静在商店买西红柿", 
+      content: [ 
+        "王静：西红柿新鲜吗？怎么卖？", 
+        "售货员：七块钱一斤，您放心，保证百分之百新鲜。", 
+        "王静：怎么这么贵啊！我记得昨天才三块五一斤，今天的价格是昨天的两倍。", 
+        "售货员：您问的这种是\"绿色\"的。一分钱一分货，每天吃一两个这种新鲜的西红柿，对皮肤有好处。", 
+        "王静：好，那我先买几个尝尝。", 
+        "售货员：好的，给您西红柿，一共两斤，十四块。" 
+      ] 
+    }, 
+    { 
+      title: "对话3：李进在商场买行李箱", 
+      content: [ 
+        "售货员：先生，我们店的行李箱都在这里，请问您要什么样的？", 
+        "李进：我想买一个轻一点儿的。", 
+        "售货员：您看看这个。不管从价格方面看，还是从质量上看，都是值得考虑的。", 
+        "李进：质量是不错，请问这个多少钱？", 
+        "售货员：现在我们商场正好有打折活动，打完折是999。另外，一年内我们都负责免费修理。", 
+        "李进：你们的服务不错，价格也可以，就买这个吧。" 
+      ] 
+    }, 
+    { 
+      title: "对话4：书店促销活动", 
+      content: [ 
+        "顾客朋友们，为了感谢大家的支持，我们书店今天举行\"购书送好礼\"活动，购书满100元送一个笔记本，满200元送一本词典。另外，一些图书还有打折活动，其中，小说7.5折，地图8折，留学考试用书6折。如果购书满500元可免费办会员卡，以后购书可打8折。今天过生日的朋友和所有的小朋友还可以获得一份小礼物。欢迎大家选购！" 
+      ] 
+    }, 
+    { 
+      title: "对话5：一分钱一分货的道理", 
+      content: [ 
+        "人们常说\"一分钱一分货\"，意思是东西的质量和价格有很大的关系，也可以说，\"便宜没好货，好货不便宜\"，一般情况下，你花的钱越多，买的东西也就越好。其实也不一定都是这样的。有的时候，质量很好的东西也会很便宜。例如，春天来了，冬天的衣服就会打折，质量很好，还很便宜，花很少的钱就可以买到。一到节日，商场也会举办各种各样的活动，降低价格，这个时候我们也可以买到又便宜又好的东西。" 
+      ] 
+    }
+  ]
+    };
+
+    // Function to check if a lesson has dialogues
+    function hasLessonDialogues(level, lessonNum) {
+      const lessonKey = `lesson${lessonNum}`;
+      return dialogueDatabase.hasOwnProperty(lessonKey) && dialogueDatabase[lessonKey].length > 0;
+    }
+
     // Function to automatically detect if a lesson has content
     function hasLessonContent(level, lessonNum) {
       const lessonKey = `lesson${lessonNum}`;
@@ -374,7 +584,7 @@
 
     // Current state
     let currentLevel = 'HSK4';
-    let currentLesson = 5; // Start with lesson 5 which has content
+    let currentLesson = 9; // Start with lesson 9 which has dialogues
 
     // Question data for different lessons
     const questionDatabase = {
@@ -483,8 +693,15 @@ lesson7: {
       for (let i = 1; i <= Object.keys(lessons).length; i++) {
         const lesson = lessons[i];
         const hasContent = hasLessonContent(currentLevel, i);
+        const hasDialogues = hasLessonDialogues(currentLevel, i);
         const button = document.createElement('button');
-        button.className = `lesson-btn ${hasContent ? 'has-content' : ''} ${i === currentLesson ? 'active' : ''}`;
+        
+        let className = 'lesson-btn';
+        if (hasDialogues) className += ' has-dialogues';
+        else if (hasContent) className += ' has-content';
+        if (i === currentLesson) className += ' active';
+        
+        button.className = className;
         button.textContent = `Lesson ${i}`;
         button.onclick = () => selectLesson(i);
         selector.appendChild(button);
@@ -522,13 +739,22 @@ lesson7: {
     }
 
     function updateLessonInfo(lessonNum) {
-      const lesson = lessonData[currentLevel][lessonNum];
-      const hasContent = hasLessonContent(currentLevel, lessonNum);
-      document.getElementById('lesson-title').textContent = `${currentLevel} - ${lesson.title}`;
-      document.getElementById('lesson-status').textContent = hasContent ? 
-        `✅ Content available (Questions ${lesson.questionRange[0]}-${lesson.questionRange[1]})` : 
-        '⚠️ Content not added yet';
-    }
+  const lesson = lessonData[currentLevel][lessonNum];
+  const hasContent = hasLessonContent(currentLevel, lessonNum);
+  const hasDialogues = hasLessonDialogues(currentLevel, lessonNum);
+  
+  document.getElementById('lesson-title').textContent = `${currentLevel} - ${lesson.title}`;
+  
+  let statusText = '';
+  if (hasContent) {
+    statusText = `✅ Content available (Questions ${lesson.questionRange[0]}-${lesson.questionRange[1]})`;
+  } else {
+    statusText = '⚠️ Content not added yet';
+  }
+  
+  document.getElementById('lesson-status').textContent = statusText;
+}
+   
 
     function clearNotes() {
       document.getElementById('vocabulary-notes').value = '';
@@ -539,15 +765,68 @@ lesson7: {
       const contentContainer = document.getElementById('lesson-content');
       const lesson = lessonData[level][lessonNum];
       const hasContent = hasLessonContent(level, lessonNum);
+      const hasDialogues = hasLessonDialogues(level, lessonNum);
       
-      if (!hasContent) {
+      // Show content type indicators
+           
+      if (!hasContent && !hasDialogues) {
         // Show placeholder with instructions
         contentContainer.innerHTML = getPlaceholderContent(lessonNum);
         return;
       }
       
-      // Automatically generate content from questionDatabase
-      contentContainer.innerHTML = generateLessonContent(lessonNum);
+      let html = '';
+      
+      // Add dialogues if available
+      if (hasDialogues) {
+        html += generateDialogueContent(lessonNum);
+      }
+      
+      // Add exercises if available
+      if (hasContent) {
+        html += generateLessonContent(lessonNum);
+      }
+      
+      contentContainer.innerHTML = html;
+    }
+
+        function generateDialogueContent(lessonNum) {
+      const lessonKey = `lesson${lessonNum}`;
+      const dialogues = dialogueDatabase[lessonKey];
+      
+      if (!dialogues || dialogues.length === 0) return '';
+      
+      let html = '<div class="dialogues-section">';
+      html += '<div class="dialogues-title">💬 对话练习 (Dialogue Practice)</div>';
+      
+      for (let i = 0; i < dialogues.length; i++) {
+        const dialogue = dialogues[i];
+        html += `<div class="dialogue-container">
+          <div class="dialogue-header">${dialogue.title}</div>
+          <div class="dialogue-content">`;
+        
+        for (let j = 0; j < dialogue.content.length; j++) {
+          const line = dialogue.content[j];
+          
+          // Extract speaker name if line starts with a name followed by colon
+          const speakerMatch = line.match(/^([^：:]+)[：:]\s*(.+)$/);
+          if (speakerMatch) {
+            const speaker = speakerMatch[1];
+            const text = speakerMatch[2];
+            html += `<div class="dialogue-line">
+              <span class="dialogue-speaker">${speaker}：</span>${text}
+            </div>`;
+          } else {
+            // No speaker identified, show as narrative text
+            html += `<div class="dialogue-line">${line}</div>`;
+          }
+        }
+        
+        html += '</div></div>';
+      }
+      
+      html += '</div>';
+      return html;
     }
 
     // Universal content generator - works for any lesson automatically!
@@ -557,7 +836,7 @@ lesson7: {
       
       if (!questions) return '';
       
-      let html = '';
+      let html = '<div class="exercises">';
       const questionNumbers = Object.keys(questions).map(Number).sort((a, b) => a - b);
       
       for (let qNum of questionNumbers) {
@@ -637,6 +916,7 @@ lesson7: {
         html += `</div>`;
       }
       
+      html += '</div>';
       return html;
     }
 
@@ -654,9 +934,18 @@ lesson7: {
         
         <div class="add-content-guide">
           <h4>📝 How to Add Content for This Lesson:</h4>
-          <p><strong>Just add questions to questionDatabase - everything else is automatic!</strong></p>
-          <p>1. Find the <code>questionDatabase</code> object in the script</p>
-          <p>2. Add a new lesson entry like this:</p>
+          <p><strong>For Dialogues:</strong> Add to dialogueDatabase</p>
+          <pre>lesson${lessonNum}: [
+  { 
+    title: "对话1：Dialogue Title", 
+    content: [ 
+      "Speaker1：Dialogue line 1", 
+      "Speaker2：Dialogue line 2",
+      "Narrative text without speaker"
+    ] 
+  }
+]</pre>
+          <p><strong>For Exercises:</strong> Add to questionDatabase</p>
           <pre>lesson${lessonNum}: {
   ${questionStart}: { 
     text: "Your question text here", 
@@ -667,22 +956,9 @@ lesson7: {
     text: "Another question", 
     type: "input" 
   },
-  ${questionStart + 2}: { 
-    text: "Arrange in correct order: A 第一部分 B 第二部分 C 第三部分", 
-    type: "input" 
-  },
   // Add all questions ${questionStart} to ${questionEnd}
 }</pre>
-          <p>3. That's it! The lesson will automatically:</p>
-          <ul style="margin-left: 20px; margin-top: 10px;">
-            <li>✅ Show green border on lesson button</li>
-            <li>✅ Generate all question HTML automatically</li>
-            <li>✅ Handle different question types (select, input, reading passages)</li>
-            <li>✅ Enable downloading answers for this lesson</li>
-          </ul>
-          <p style="margin-top: 15px; color: #28a745; font-weight: bold;">
-            No manual functions needed - just add questions and reload the page!
-          </p>
+          <p>3. That's it! The lesson will automatically show both dialogues and exercises with proper indicators!</p>
         </div>
       `;
     }
@@ -691,6 +967,7 @@ lesson7: {
     function downloadAnswers() {
       const lesson = lessonData[currentLevel][currentLesson];
       const hasContent = hasLessonContent(currentLevel, currentLesson);
+      const hasDialogues = hasLessonDialogues(currentLevel, currentLesson);
       const timestamp = new Date();
       
       let content = `${currentLevel} - ${lesson.title}\n`;
@@ -706,12 +983,29 @@ lesson7: {
       content += `Vocabulary Notes: ${vocabNotes || 'No notes yet'}\n\n`;
       content += `Grammar Notes: ${grammarNotes || 'No notes yet'}\n\n`;
       
-      if (!hasContent) {
+      // Add dialogue content if available
+      if (hasDialogues) {
+        const lessonKey = `lesson${currentLesson}`;
+        const dialogues = dialogueDatabase[lessonKey];
+        content += `DIALOGUES\n`;
+        content += `${'-'.repeat(30)}\n`;
+        
+        for (let i = 0; i < dialogues.length; i++) {
+          const dialogue = dialogues[i];
+          content += `${dialogue.title}\n`;
+          for (let j = 0; j < dialogue.content.length; j++) {
+            content += `${dialogue.content[j]}\n`;
+          }
+          content += `\n`;
+        }
+      }
+      
+      if (!hasContent && !hasDialogues) {
         content += `LESSON STATUS\n`;
         content += `${'-'.repeat(30)}\n`;
         content += `This lesson does not have content yet.\n`;
         content += `Assigned question range: ${lesson.questionRange[0]} - ${lesson.questionRange[1]}\n\n`;
-      } else {
+      } else if (hasContent) {
         // Get questions for current lesson automatically
         const lessonKey = `lesson${currentLesson}`;
         const questions = questionDatabase[lessonKey];

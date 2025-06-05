@@ -26,7 +26,7 @@
     }
 
     .header {
-      background: #ff6b6b;
+      background: #ECC375;
       color: white;
       padding: 20px;
       text-align: center;
@@ -47,9 +47,9 @@
     .level-btn {
       background: rgba(255,255,255,0.2);
       color: white;
-      border: 2px solid white;
+      border: 1px;
       padding: 8px 16px;
-      border-radius: 5px;
+      border-radius: 2px;
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -69,7 +69,7 @@
     .lesson-btn {
       background: rgba(255,255,255,0.2);
       color: white;
-      border: 1px solid white;
+      border: 1px;
       padding: 6px 12px;
       border-radius: 3px;
       cursor: pointer;
@@ -83,12 +83,12 @@
     }
 
     .lesson-btn.has-content {
-      border: 2px solid #90EE90;
-      background: rgba(144, 238, 144, 0.2);
+      border: 1px #ff6b6b;
+      background: #F3E0BC;
     }
 
     .lesson-btn.has-content.active {
-      background: #90EE90;
+      background: white;
       color: #ff6b6b;
     }
 
@@ -409,7 +409,7 @@
       },
       // Lesson 6 questions (131-156)
       lesson6: {
-  131: {     text: "你应该学会说"不"，而不是（ ）的要求都接受。",     type: "select",     options: ["A - 情况", "B - 获得", "C - 举办", "D - 坚持", "E - 所有"]   },
+  131: {     text: "你应该学会说\"不\"，而不是（ ）的要求都接受。",     type: "select",     options: ["A - 情况", "B - 获得", "C - 举办", "D - 坚持", "E - 所有"]   },
   132: {     text: "没想到她第一次参加比赛就（ ）了这么大的成功。",     type: "select",     options: ["A - 情况", "B - 获得", "C - 举办", "D - 坚持", "E - 所有"]   },
   133: {     text: "您说的这个（ ）很重要，我们今天就安排人去调查。",     type: "select",     options: ["A - 情况", "B - 获得", "C - 举办", "D - 坚持", "E - 所有"]   },
   134: {     text: "我们学校经常会（ ）一些活动来丰富学生们的生活。",     type: "select",     options: ["A - 情况", "B - 获得", "C - 举办", "D - 坚持", "E - 所有"]   },
@@ -421,13 +421,13 @@
   140: {     text: "Arrange in correct order: A 他是我大学时的同学 B 毕业后我们就再也没联系过 C 没想到中午我去取护照时竟然遇到他了",     type: "input"   },
   141: {     text: "Arrange in correct order: A 但是他很诚实 B 小关的脾气有时候是有点儿差 C 是个值得相信的人",     type: "input"   },
   142: {     text: "Arrange in correct order: A 这种情况下，就需要及时交流 B 两个人在一起，总会遇到问题 C 如果不这样的话，关系就可能会越来越远",     type: "input"   },
-  143: {     text: "Reading passage: 实际上，售货员太热情地为顾客介绍、介绍邮、会让我觉得很不舒服。许多人在逛商场时喜欢自己看、自己选，而不愿意总是被别人打扰。\nQuestion: "我"在逛商场时：",     type: "select",     options: ["A - 觉得无聊", "B - 喜欢自己选", "C - 很少考虑价格", "D - 喜欢售货员介绍"]   },
-  144: {     text: "Reading passage: 做生意讲的是"一分钱一分货"，意思是说货物的质量和价格有很大的关系，所以人们经常说"便宜没好货，好货不便宜"。\nQuestion: 一般情况下，贵的东西：",     type: "select",     options: ["A - 广告多", "B - 哪得多", "C - 不好卖", "D - 质量好"]   },
+  143: {     text: "Reading passage: 实际上，售货员太热情地为顾客介绍、介绍邮、会让我觉得很不舒服。许多人在逛商场时喜欢自己看、自己选，而不愿意总是被别人打扰。\nQuestion: \"我\"在逛商场时：",     type: "select",     options: ["A - 觉得无聊", "B - 喜欢自己选", "C - 很少考虑价格", "D - 喜欢售货员介绍"]   },
+  144: {     text: "Reading passage: 做生意讲的是\"一分钱一分货\"，意思是说货物的质量和价格有很大的关系，所以人们经常说\"便宜没好货，好货不便宜\"。\nQuestion: 一般情况下，贵的东西：",     type: "select",     options: ["A - 广告多", "B - 哪得多", "C - 不好卖", "D - 质量好"]   },
   145: {     text: "Reading passage: 每到换季或者节假日的时候，各大商场都会举办一些打折活动来吸引顾客。这样人们就能花比较少的钱买到质量不错的东西，有时一样的东西甚至能比平时少花一半的钱。\nQuestion: 商场举办活动是为了：",     type: "select",     options: ["A - 检查质量", "B - 吸引顾客", "C - 举行招聘会", "D - 提高服务水平"]   },
   146: {     text: "Reading passage: 如果一个星期内发现有任何质量问题，我们都可以免费为您换，但是购物小票一定要留好。如果没有购物小票，我们是没法给您换的。\nQuestion: 说话人提醒他：",     type: "select",     options: ["A - 看购物小票", "B - 留着购物小票", "C - 一个月以内换", "D - 东西不能换"]   },
   147: {     text: "Reading passage: 小娟，这些菜是绿色食品，不仅很好吃，而且对身体也很有好处，所以价格要比其他菜贵一些。\nQuestion: 这些菜的特点是：",     type: "select",     options: ["A - 干净", "B - 便宜", "C - 味道不太好", "D - 对身体好"]   },
-  148: {     text: "Reading passage: 顾客朋友们，本超市现举行"购物送好礼"活动，购物满100元即可获得可乐一瓶，满500元可获得葡萄酒一瓶。另外，还有水果打折活动，其中，苹果9折，葡萄8折，香蕉、西瓜6折。欢迎选购！祝您购物愉快！\nQuestion: 购物满100元能获得什么礼物？",     type: "select",     options: ["A - 西红柿", "B - 葡萄酒", "C - 可乐", "D - 西瓜"]   },
-  149: {     text: "Reading passage: 顾客朋友们，本超市现举行"购物送好礼"活动，购物满100元即可获得可乐一瓶，满500元可获得葡萄酒一瓶。另外，还有水果打折活动，其中，苹果9折，葡萄8折，香蕉、西瓜6折。欢迎选购！祝您购物愉快！\nQuestion: 根据这段话，可以知道：",     type: "select",     options: ["A - 超市生意很好", "B - 葡萄酒半价", "C - 有些水果打折", "D - 饮料免费"]   },
+  148: {     text: "Reading passage: 顾客朋友们，本超市现举行\"购物送好礼\"活动，购物满100元即可获得可乐一瓶，满500元可获得葡萄酒一瓶。另外，还有水果打折活动，其中，苹果9折，葡萄8折，香蕉、西瓜6折。欢迎选购！祝您购物愉快！\nQuestion: 购物满100元能获得什么礼物？",     type: "select",     options: ["A - 西红柿", "B - 葡萄酒", "C - 可乐", "D - 西瓜"]   },
+  149: {     text: "Reading passage: 顾客朋友们，本超市现举行\"购物送好礼\"活动，购物满100元即可获得可乐一瓶，满500元可获得葡萄酒一瓶。另外，还有水果打折活动，其中，苹果9折，葡萄8折，香蕉、西瓜6折。欢迎选购！祝您购物愉快！\nQuestion: 根据这段话，可以知道：",     type: "select",     options: ["A - 超市生意很好", "B - 葡萄酒半价", "C - 有些水果打折", "D - 饮料免费"]   },
   150: {     text: "Reading passage: 你卖的东西可不可以比别人卖的价格高？这主要要看东西的质量。如果质量比别人的好，那么价格比别人的贵一点儿也没关系。另外，环境和服务水平也很重要。质量完全一样的东西，但如果环境和服务更好，那么即使贵一点儿，大家也能接受。\nQuestion: 这段话主要想说明，质量好的东西可以：",     type: "select",     options: ["A - 卖得贵", "B - 卖得快", "C - 用得久", "D - 很流行"]   },
   151: {     text: "Reading passage: 你卖的东西可不可以比别人卖的价格高？这主要要看东西的质量。如果质量比别人的好，那么价格比别人的贵一点儿也没关系。另外，环境和服务水平也很重要。质量完全一样的东西，但如果环境和服务更好，那么即使贵一点儿，大家也能接受。\nQuestion: 质量相同的东西，怎样能卖更高的价格？",     type: "select",     options: ["A - 做广告", "B - 送礼物", "C - 免费试用", "D - 提高服务水平"]   },
   152: {     text: "Arrange these words into a complete sentence: 这双筷子 给我的 是 弟弟",     type: "input"   },
@@ -435,8 +435,36 @@
   154: {     text: "Arrange these words into a complete sentence: 饮料 火车上 不提供 免费的",     type: "input"   },
   155: {     text: "Arrange these words into a complete sentence: 举行 这次电影艺术节 北京 会 在",     type: "input"   },
   156: {     text: "Arrange these words into a complete sentence: 对 非常感谢您 理解和支持 我们工作的",     type: "input"   }
+      },
 
-      }
+lesson7: {
+  157: { text: "我的（）在叫了，早上只吃了一小块儿蛋糕。", type: "select", options: ["A - 数字", "B - 植物", "C - 肚子", "D - 坚持", "E - 超过"] },
+  158: { text: "你储蓄99.9元，不与100，这其实是在玩儿（）游戏。", type: "select", options: ["A - 数字", "B - 植物", "C - 肚子", "D - 坚持", "E - 超过"] },
+  159: { text: "身高速（）一米三危险，不用买票。", type: "select", options: ["A - 数字", "B - 植物", "C - 肚子", "D - 坚持", "E - 超过"] },
+  160: { text: "他们说的其实是同一种（），只是在南方和北方有两个不同的名字。", type: "select", options: ["A - 数字", "B - 植物", "C - 肚子", "D - 坚持", "E - 超过"] },
+  161: { text: "A: 你该哟好点儿了吗？医生怎么说？\\nB: 还是老样子，他让我以后不要再（）了。", type: "select", options: ["A - 严重", "B - 后悔", "C - 温度", "D - 抽烟", "E - 来不及"] },
+  162: { text: "A: 我的感冒是（）了，我想明天请一天假。\\nB: 没问题，你最好去医院看一下。", type: "select", options: ["A - 严重", "B - 后悔", "C - 温度", "D - 抽烟", "E - 来不及"] },
+  163: { text: "A: 最近我总是感冒，吃点儿什么药好？\\nB: 冬天这么冷你还穿得子，能不感冒吗？别光想着漂亮，等身体出现问题了，（）就晚了。", type: "select", options: ["A - 严重", "B - 后悔", "C - 温度", "D - 抽烟", "E - 来不及"] },
+  164: { text: "A: 这个地方真大啊！咱们再去那边逛逛吧。\\nB: 算了（）了，旅游车马上就要回去了。", type: "select", options: ["A - 严重", "B - 后悔", "C - 温度", "D - 抽烟", "E - 来不及"] },
+  165: { text: "Arrange in correct order: A 我晚点儿才能回去，桌子上有早上没吃完的面包 B 就先吃点儿 C 冰箱里还有面条，你要是饿了", type: "input" },
+  166: { text: "Arrange in correct order: A 如果你没有准备好 B 它也会离开你去找别人 C 那么就算机会走到了你面前", type: "input" },
+  167: { text: "Arrange in correct order: A 嘴上就会马上说出来 B 意思是说一个人心里有什么想法 C \"心直口快\"常用来说明人的性格", type: "input" },
+  168: { text: "Arrange in correct order: A 秋冬季节，皮肤容易变得很干 B 这是让很多人烦恼的事 C 为了远离这个烦恼，我们要注意多喝水", type: "input" },
+  169: { text: "Reading passage: 她很活泼，说话很有趣，总能给我们带来快乐，我们都很喜欢和她在一起。\\nQuestion: 她是个什么样的人？", type: "select", options: ["A - 幽默", "B - 马虎", "C - 骄傲", "D - 害羞"] },
+  170: { text: "Reading passage: 医生提醒人们，在吃感冒药前，一定要认真看说明书。并且最好只选择一种感冒药，如果药物之间互相影响，可能会对健康不好。\\nQuestion: 医生一共有几个提醒？", type: "select", options: ["A - 一个", "B - 两个", "C - 三个", "D - 四个"] },
+  171: { text: "Reading passage: 没关系，不是很严重，不用住院，但是要注意多休息，不要太累。我再给你开点儿药，你要每天按时吃。\\nQuestion: 这段话最可能是谁说的？", type: "select", options: ["A - 售货员", "B - 顾客", "C - 大夫", "D - 律师"] },
+  172: { text: "Reading passage: 夏天空调开不能开得太低，室内比室外低不要超过7℃。不然，从室外进入室内，很容易感冒。\\nQuestion: 夏天空调开得太低，容易让人：", type: "select", options: ["A - 生气", "B - 生病", "C - 牙疼", "D - 难过"] },
+  173: { text: "Reading passage: 人们一般认为，一个人每天的睡觉时间应保证7到8个小时。但也有人认为，如果只睡5到6个小时，你感觉也很好，那就不需要睡更长时间。\\nQuestion: 根据这段话，睡觉时间：", type: "select", options: ["A - 越长越好", "B - 越短越好", "C - 应保证7到8个小时", "D - 人们看法不同"] },
+  174: { text: "Reading passage: 人们常说\"生命在于运动\"，运动对身体健康非常重要。所以我们应该有按时锻炼的好习惯，打篮球、踢足球、跑步等都是不错的选择。\\nQuestion: 这段话主要谈：", type: "select", options: ["A - 动作要标准", "B - 应按时运动", "C - 减肥的方法", "D - 工作很重要"] },
+  175: { text: "Reading passage: 以前的人认为胖是美的，现在的人却认为瘦是美的，所以美女的标准一直在变。但是不管什么时候，想要变美必须要先健康。如果没有了健康，也就没有了真正的美。所以，女孩子们在减肥的时候要记得，健康才是第一位的。\\nQuestion: 以前人们觉得什么样的女孩子更美？", type: "select", options: ["A - 胖的", "B - 瘦的", "C - 爱笑的", "D - 安静的"] },
+  176: { text: "Reading passage: 以前的人认为胖是美的，现在的人却认为瘦是美的，所以美女的标准一直在变。但是不管什么时候，想要变美必须要先健康。如果没有了健康，也就没有了真正的美。所以，女孩子们在减肥的时候要记得，健康才是第一位的。\\nQuestion: 这段话主要想告诉我们：", type: "select", options: ["A - 要少吃饭", "B - 要减肥", "C - 健康最重要", "D - 变美很难"] },
+  177: { text: "Reading passage: 研究发现，久坐对人的身体健康有很大影响。医生提醒人们，每天静坐的时间最好不要超过4小时，如果超过6小时就会对身体非常不好。所以坐办公室的人和司机一定要注意，有时间就站起来活动活动，别等到身体出了问题再后悔。\\nQuestion: 静坐的时间最好：", type: "select", options: ["A - 不要超过6小时", "B - 4到6个小时", "C - 4小时以内", "D - 超过睡觉时间"] },
+  178: { text: "Reading passage: 研究发现，久坐对人的身体健康有很大影响。医生提醒人们，每天静坐的时间最好不要超过4小时，如果超过6小时就会对身体非常不好。所以坐办公室的人和司机一定要注意，有时间就站起来活动活动，别等到身体出了问题再后悔。\\nQuestion: 科学家提醒人们：", type: "select", options: ["A - 要多散步", "B - 不要久坐", "C - 不要抽烟", "D - 要常检查身体"] },
+  179: { text: "Complete the sentence: 我___适应这里的___还不太___气候", type: "input" },
+  180: { text: "Complete the sentence: 那位病人___严重的___情况___吗", type: "input" },
+  181: { text: "Complete the sentence: 你___关___把窗户___吗___了", type: "input" },
+  182: { text: "Complete the sentence: 好处___抽烟___身体___没有___对", type: "input" }
+}
     };
 
     // Initialize the platform

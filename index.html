@@ -747,7 +747,7 @@
       content += `Vocabulary Notes: ${vocabNotes || 'No notes yet'}\n\n`;
       content += `Grammar Notes: ${grammarNotes || 'No notes yet'}\n\n`;
       
-      // Question data with text
+      // Question data with full text
       const questionData = {
         23: { text: "现在坐电梯的人（ ）很多，咖啡馆就在二层，我们走上去吧。", type: "select" },
         24: { text: "那件衣服（ ）后只要80元，很便宜。", type: "select" },
@@ -757,24 +757,24 @@
         28: { text: "A: 还有这么多菜没吃完，太（ ）了。 B: 那把服务员叫来，我们都带回去吧。", type: "select" },
         29: { text: "A: 看（ ）你对这里很熟悉。 B: 当然了，我在这儿住了差不多十年，去年才搬走的。", type: "select" },
         30: { text: "A: 你这双鞋在哪儿买的？看上去（ ）不错。 B: 我也不知道，我爱人给我买的。", type: "select" },
-        31: { text: "Arrange: A 另外，价格还便宜 B 现在网上购物很流行 C 你在网上买的东西会送到你办公室或者家里", type: "input" },
-        32: { text: "Arrange: A 这儿离地铁站很近，附近也有很多公共汽车站 B 但房价可不便宜 C 所以，别看房子有点儿旧", type: "input" },
-        33: { text: "Arrange: A 但我还是一眼就认出了他 B 虽然毕业以后我们存了20多年没见面了 C 因为他的样子儿子没什么变化", type: "input" },
-        34: { text: "Arrange: A 我打算送她一个 B 妹妹很早之前就想买个照相机 C 下个月一号正好她过生日", type: "input" },
-        35: { text: "现在在网上几乎什么都可以买到...这段话主要介绍什么？", type: "select" },
-        36: { text: "说话虽然是生活中很普通的事...根据这段话，不能肯定的事：", type: "select" },
-        37: { text: "人们很容易被便宜的东西吸引...人们为什么会买一些不需要的东西？", type: "select" },
-        38: { text: "有些人喜欢根据别人的喜好来选购衣服...这段话告诉我们应该选什么样的衣服？", type: "select" },
-        39: { text: "了解顾客的实际需要十分重要...除了质量和价格，顾客还会考虑：", type: "select" },
-        40: { text: "在节假日，我们经常会看到商场举办各种打折活动...节假日商场打折是为了：", type: "select" },
-        41: { text: "根据这段话，买东西应该考虑：", type: "select" },
-        42: { text: "买衣服只考虑便宜当然不好...她认为，买衣服：", type: "select" },
-        43: { text: "根据这段话，可以知道什么？", type: "select" },
-        44: { text: "Arrange words: 不错 这台 质量 洗衣机 的", type: "input" },
-        45: { text: "Arrange words: 不会 肯定 他 同意你这么做", type: "input" },
-        46: { text: "Arrange words: 流行的 音乐 这是现在 最", type: "input" },
-        47: { text: "Arrange words: 不得不 他 重新 考虑这件事", type: "input" },
-        48: { text: "Arrange words: 普通话 不太 我的 说得 标准", type: "input" }
+        31: { text: "Arrange in correct order: A 另外，价格还便宜 B 现在网上购物很流行 C 你在网上买的东西会送到你办公室或者家里", type: "input" },
+        32: { text: "Arrange in correct order: A 这儿离地铁站很近，附近也有很多公共汽车站 B 但房价可不便宜 C 所以，别看房子有点儿旧", type: "input" },
+        33: { text: "Arrange in correct order: A 但我还是一眼就认出了他 B 虽然毕业以后我们存了20多年没见面了 C 因为他的样子儿子没什么变化", type: "input" },
+        34: { text: "Arrange in correct order: A 我打算送她一个 B 妹妹很早之前就想买个照相机 C 下个月一号正好她过生日", type: "input" },
+        35: { text: "Reading passage: 现在在网上几乎什么都可以买到，你可以在网上买书、买鞋、买水果，你还可以在网上买沙发、买缝纫、大多数网上商店可以保证东西的质量。\nQuestion: 这段话主要介绍什么？", type: "select" },
+        36: { text: "Reading passage: 说话虽然是生活中很普通的事，却不简单，有很多地方要注意：别人的事，要小心地说；讨厌的事，要对事不对人地说；现在的事，做了再说；以后的事，以后再说；而不能肯定的事不要说。\nQuestion: 根据这段话，不能肯定的事：", type: "select" },
+        37: { text: "Reading passage: 人们很容易被便宜的东西吸引，尤其在商家打折的时候，常常会买一些自己来不需要、很可能一直都用不到的东西。\nQuestion: 人们为什么会买一些不需要的东西？", type: "select" },
+        38: { text: "Reading passage: 有些人喜欢根据别人的喜好来选购衣服，认为流行的就是好的，但实际上，真正适合自己的才是最好的。\nQuestion: 这段话告诉我们应该选什么样的衣服？", type: "select" },
+        39: { text: "Reading passage: 了解顾客的实际需要十分重要，一样东西，不管它质量多好，多便宜，如果顾客完全不需要它，我们就很难把它卖出去。\nQuestion: 除了质量和价格，顾客还会考虑：", type: "select" },
+        40: { text: "Reading passage: 在节假日，我们经常会看到商场举办各种打折活动，这样做主要是为了吸引更多的顾客来购物。不过人们在购买的时候，不能只看价格，还应考虑买的东西是不是适合自己，是不是必须买。如果不适合自己，不是必须买，即使便宜很多也是一种浪费。\nQuestion: 节假日商场打折是为了：", type: "select" },
+        41: { text: "Question based on passage above: 根据这段话，买东西应该考虑：", type: "select" },
+        42: { text: "Reading passage: 买衣服只考虑便宜当然不好，但是只买贵的也不一定对。我对衣服的要求：第一是要自己穿着舒服，第二是衣服的质量要好，而且又不能太贵。衣服的样子流行不流行，对我来说并不是很重要。很多年轻人买衣服只喜欢逛大商场，只买贵衣服，而对那些衣服是不是适合自己却不会考虑很多。这一点是我理解不了的。\nQuestion: 她认为，买衣服：", type: "select" },
+        43: { text: "Question based on passage above: 根据这段话，可以知道什么？", type: "select" },
+        44: { text: "Arrange these words into a complete sentence: 不错 这台 质量 洗衣机 的", type: "input" },
+        45: { text: "Arrange these words into a complete sentence: 不会 肯定 他 同意你这么做", type: "input" },
+        46: { text: "Arrange these words into a complete sentence: 流行的 音乐 这是现在 最", type: "input" },
+        47: { text: "Arrange these words into a complete sentence: 不得不 他 重新 考虑这件事", type: "input" },
+        48: { text: "Arrange these words into a complete sentence: 普通话 不太 我的 说得 标准", type: "input" }
       };
       
       // Add all questions and answers

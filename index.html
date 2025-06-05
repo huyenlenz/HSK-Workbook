@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSK Exercise Platform</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: #ff6b6b;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .level-selector {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .level-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 2px solid white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .level-btn:hover, .level-btn.active {
+      background: white;
+      color: #ff6b6b;
+    }
+
+    .lesson-selector {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .lesson-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid white;
+      padding: 6px 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .lesson-btn:hover, .lesson-btn.active {
+      background: white;
+      color: #ff6b6b;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .notes-section {
+      background: #fff5f5;
+      border: 1px solid #ff6b6b;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .notes-title {
+      color: #ff6b6b;
+      font-weight: 600;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .note-box h4 {
+      color: #ff6b6b;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .note-textarea {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      min-height: 80px;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .note-textarea:focus {
+      outline: none;
+      border-color: #ff6b6b;
+    }
+
+    .exercises {
+      max-width: 100%;
+    }
+
+    .question {
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .question:last-child {
+      border-bottom: none;
+    }
+
+    .question-number {
+      color: #ff6b6b;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .answer-input, .answer-select {
+      width: 100%;
+      max-width: 300px;
+      padding: 8px 12px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    .answer-input:focus, .answer-select:focus {
+      outline: none;
+      border-color: #ff6b6b;
+    }
+
+    .sentence-parts {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .sentence-parts h4 {
+      margin-bottom: 10px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .parts-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .part-item {
+      background: #e9ecef;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 0.9rem;
+    }
+
+    .reading-passage {
+      background: #f8f9fa;
+      padding: 15px;
+      border-left: 3px solid #ff6b6b;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .save-btn {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: block;
+      margin: 30px auto 0;
+    }
+
+    .save-btn:hover {
+      background: #e55555;
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        padding: 20px;
+      }
+
+      .notes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-selector {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>HSK Exercise Platform</h1>
+      
+      <div class="level-selector">
+        <button class="level-btn active" onclick="selectLevel('HSK4')">HSK 4</button>
+        <button class="level-btn" onclick="selectLevel('HSK5')">HSK 5</button>
+      </div>
+
+      <div class="lesson-selector">
+        <button class="lesson-btn" onclick="selectLesson(1)">Lesson 1</button>
+        <button class="lesson-btn" onclick="selectLesson(2)">Lesson 2</button>
+        <button class="lesson-btn" onclick="selectLesson(3)">Lesson 3</button>
+        <button class="lesson-btn" onclick="selectLesson(4)">Lesson 4</button>
+        <button class="lesson-btn active" onclick="selectLesson(5)">Lesson 5</button>
+        <button class="lesson-btn" onclick="selectLesson(6)">Lesson 6</button>
+        <button class="lesson-btn" onclick="selectLesson(7)">Lesson 7</button>
+        <button class="lesson-btn" onclick="selectLesson(8)">Lesson 8</button>
+        <button class="lesson-btn" onclick="selectLesson(9)">Lesson 9</button>
+        <button class="lesson-btn" onclick="selectLesson(10)">Lesson 10</button>
+        <button class="lesson-btn" onclick="selectLesson(11)">Lesson 11</button>
+        <button class="lesson-btn" onclick="selectLesson(12)">Lesson 12</button>
+        <button class="lesson-btn" onclick="selectLesson(13)">Lesson 13</button>
+        <button class="lesson-btn" onclick="selectLesson(14)">Lesson 14</button>
+        <button class="lesson-btn" onclick="selectLesson(15)">Lesson 15</button>
+        <button class="lesson-btn" onclick="selectLesson(16)">Lesson 16</button>
+        <button class="lesson-btn" onclick="selectLesson(17)">Lesson 17</button>
+        <button class="lesson-btn" onclick="selectLesson(18)">Lesson 18</button>
+        <button class="lesson-btn" onclick="selectLesson(19)">Lesson 19</button>
+        <button class="lesson-btn" onclick="selectLesson(20)">Lesson 20</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="notes-section">
+        <div class="notes-title">📝 Lesson Notes</div>
+        <div class="notes-grid">
+          <div class="note-box">
+            <h4>New Vocabulary</h4>
+            <textarea class="note-textarea" id="vocabulary-notes" placeholder="Write down new words..."></textarea>
+          </div>
+          <div class="note-box">
+            <h4>Grammar Points</h4>
+            <textarea class="note-textarea" id="grammar-notes" placeholder="Note grammar patterns..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="exercises" id="lesson-content">
+        <!-- Questions 23-26 -->
+        <div class="question">
+          <div class="question-number">23.</div>
+          <div class="question-text">现在坐电梯的人（ &nbsp;&nbsp;&nbsp; ）很多，咖啡馆就在二层，我们走上去吧。</div>
+          <select class="answer-select" id="q23">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 效果</option>
+            <option value="B">B - 打折</option>
+            <option value="C">C - 顺便</option>
+            <option value="D">D - 坚持</option>
+            <option value="E">E - 肯定</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">24.</div>
+          <div class="question-text">那件衣服（ &nbsp;&nbsp;&nbsp; ）后只要80元，很便宜。</div>
+          <select class="answer-select" id="q24">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 效果</option>
+            <option value="B">B - 打折</option>
+            <option value="C">C - 顺便</option>
+            <option value="D">D - 坚持</option>
+            <option value="E">E - 肯定</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">25.</div>
+          <div class="question-text">你去买啤酒吗？（ &nbsp;&nbsp;&nbsp; ）帮我买一盒牛奶吧。</div>
+          <select class="answer-select" id="q25">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 效果</option>
+            <option value="B">B - 打折</option>
+            <option value="C">C - 顺便</option>
+            <option value="D">D - 坚持</option>
+            <option value="E">E - 肯定</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">26.</div>
+          <div class="question-text">这张山水画放在房间里（ &nbsp;&nbsp;&nbsp; ）肯定不错，就买它了。</div>
+          <select class="answer-select" id="q26">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 效果</option>
+            <option value="B">B - 打折</option>
+            <option value="C">C - 顺便</option>
+            <option value="D">D - 坚持</option>
+            <option value="E">E - 肯定</option>
+          </select>
+        </div>
+
+        <!-- Questions 27-30 -->
+        <div class="question">
+          <div class="question-number">27.</div>
+          <div class="question-text">
+            A: 爷爷，您换洗衣机了？<br>
+            B: 不光是洗衣机，你去房间里看看，我把（ &nbsp;&nbsp;&nbsp; ）也换了。
+          </div>
+          <select class="answer-select" id="q27">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 样子</option>
+            <option value="B">B - 浪费</option>
+            <option value="C">C - 温度</option>
+            <option value="D">D - 质量</option>
+            <option value="E">E - 家具</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">28.</div>
+          <div class="question-text">
+            A: 还有这么多菜没吃完，太（ &nbsp;&nbsp;&nbsp; ）了。<br>
+            B: 那把服务员叫来，我们都带回去吧。
+          </div>
+          <select class="answer-select" id="q28">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 样子</option>
+            <option value="B">B - 浪费</option>
+            <option value="C">C - 温度</option>
+            <option value="D">D - 质量</option>
+            <option value="E">E - 家具</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">29.</div>
+          <div class="question-text">
+            A: 看（ &nbsp;&nbsp;&nbsp; ）你对这里很熟悉。<br>
+            B: 当然了，我在这儿住了差不多十年，去年才搬走的。
+          </div>
+          <select class="answer-select" id="q29">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 样子</option>
+            <option value="B">B - 浪费</option>
+            <option value="C">C - 温度</option>
+            <option value="D">D - 质量</option>
+            <option value="E">E - 家具</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">30.</div>
+          <div class="question-text">
+            A: 你这双鞋在哪儿买的？看上去（ &nbsp;&nbsp;&nbsp; ）不错。<br>
+            B: 我也不知道，我爱人给我买的。
+          </div>
+          <select class="answer-select" id="q30">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 样子</option>
+            <option value="B">B - 浪费</option>
+            <option value="C">C - 温度</option>
+            <option value="D">D - 质量</option>
+            <option value="E">E - 家具</option>
+          </select>
+        </div>
+
+        <!-- Questions 31-34 Sentence Ordering -->
+        <div class="question">
+          <div class="question-number">31.</div>
+          <div class="sentence-parts">
+            <h4>Arrange in correct order:</h4>
+            <div class="parts-list">
+              <span class="part-item">A 另外，价格还便宜</span>
+              <span class="part-item">B 现在网上购物很流行</span>
+              <span class="part-item">C 你在网上买的东西会送到你办公室或者家里</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q31" placeholder="Enter order (e.g., B-A-C)">
+        </div>
+
+        <div class="question">
+          <div class="question-number">32.</div>
+          <div class="sentence-parts">
+            <h4>Arrange in correct order:</h4>
+            <div class="parts-list">
+              <span class="part-item">A 这儿离地铁站很近，附近也有很多公共汽车站</span>
+              <span class="part-item">B 但房价可不便宜</span>
+              <span class="part-item">C 所以，别看房子有点儿旧</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q32" placeholder="Enter order (e.g., A-C-B)">
+        </div>
+
+        <div class="question">
+          <div class="question-number">33.</div>
+          <div class="sentence-parts">
+            <h4>Arrange in correct order:</h4>
+            <div class="parts-list">
+              <span class="part-item">A 但我还是一眼就认出了他</span>
+              <span class="part-item">B 虽然毕业以后我们存了20多年没见面了</span>
+              <span class="part-item">C 因为他的样子儿子没什么变化</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q33" placeholder="Enter order (e.g., B-A-C)">
+        </div>
+
+        <div class="question">
+          <div class="question-number">34.</div>
+          <div class="sentence-parts">
+            <h4>Arrange in correct order:</h4>
+            <div class="parts-list">
+              <span class="part-item">A 我打算送她一个</span>
+              <span class="part-item">B 妹妹很早之前就想买个照相机</span>
+              <span class="part-item">C 下个月一号正好她过生日</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q34" placeholder="Enter order (e.g., B-C-A)">
+        </div>
+
+        <!-- Questions 35-37 Reading Comprehension -->
+        <div class="question">
+          <div class="question-number">35.</div>
+          <div class="reading-passage">
+            现在在网上几乎什么都可以买到，你可以在网上买书、买鞋、买水果，你还可以在网上买沙发、买缝纫、大多数网上商店可以保证东西的质量。
+          </div>
+          <div class="question-text">这段话主要介绍什么？</div>
+          <select class="answer-select" id="q35">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 怎么上网</option>
+            <option value="B">B - 网上购物</option>
+            <option value="C">C - 电子邮件</option>
+            <option value="D">D - 怎么做生意</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">36.</div>
+          <div class="reading-passage">
+            说话虽然是生活中很普通的事，却不简单，有很多地方要注意：别人的事，要小心地说；讨厌的事，要对事不对人地说；现在的事，做了再说；以后的事，以后再说；而不能肯定的事不要说。
+          </div>
+          <div class="question-text">根据这段话，不能肯定的事：</div>
+          <select class="answer-select" id="q36">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 和同事说</option>
+            <option value="B">B - 多和朋友说</option>
+            <option value="C">C - 要让邻居知道</option>
+            <option value="D">D - 别说</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">37.</div>
+          <div class="reading-passage">
+            人们很容易被便宜的东西吸引，尤其在商家打折的时候，常常会买一些自己来不需要、很可能一直都用不到的东西。
+          </div>
+          <div class="question-text">人们为什么会买一些不需要的东西？</div>
+          <select class="answer-select" id="q37">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 质量好</option>
+            <option value="B">B - 漂亮</option>
+            <option value="C">C - 便宜</option>
+            <option value="D">D - 不打折</option>
+          </select>
+        </div>
+
+        <!-- Questions 38-43 Reading Comprehension -->
+        <div class="question">
+          <div class="question-number">38.</div>
+          <div class="reading-passage">
+            有些人喜欢根据别人的喜好来选购衣服，认为流行的就是好的，但实际上，真正适合自己的才是最好的。
+          </div>
+          <div class="question-text">这段话告诉我们应该选什么样的衣服？</div>
+          <select class="answer-select" id="q38">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 适合自己的</option>
+            <option value="B">B - 样子流行的</option>
+            <option value="C">C - 大家都满意的</option>
+            <option value="D">D - 质量好的</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">39.</div>
+          <div class="reading-passage">
+            了解顾客的实际需要十分重要，一样东西，不管它质量多好，多便宜，如果顾客完全不需要它，我们就很难把它卖出去。
+          </div>
+          <div class="question-text">除了质量和价格，顾客还会考虑：</div>
+          <select class="answer-select" id="q39">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 商场的服务</option>
+            <option value="B">B - 自己需要不需要</option>
+            <option value="C">C - 自己的购买能力</option>
+            <option value="D">D - 商场的环境</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">40.</div>
+          <div class="reading-passage">
+            在节假日，我们经常会看到商场举办各种打折活动，这样做主要是为了吸引更多的顾客来购物。不过人们在购买的时候，不能只看价格，还应考虑买的东西是不是适合自己，是不是必须买。如果不适合自己，不是必须买，即使便宜很多也是一种浪费。
+          </div>
+          <div class="question-text">节假日商场打折是为了：</div>
+          <select class="answer-select" id="q40">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 吸引顾客</option>
+            <option value="B">B - 保证质量</option>
+            <option value="C">C - 丰富人们的生活</option>
+            <option value="D">D - 提高服务的水平</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">41.</div>
+          <div class="question-text">根据这段话，买东西应该考虑：</div>
+          <select class="answer-select" id="q41">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 质量好坏</option>
+            <option value="B">B - 家人是否同意</option>
+            <option value="C">C - 有没有用</option>
+            <option value="D">D - 自己的收入</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">42.</div>
+          <div class="reading-passage">
+            买衣服只考虑便宜当然不好，但是只买贵的也不一定对。我对衣服的要求：第一是要自己穿着舒服，第二是衣服的质量要好，而且又不能太贵。衣服的样子流行不流行，对我来说并不是很重要。很多年轻人买衣服只喜欢逛大商场，只买贵衣服，而对那些衣服是不是适合自己却不会考虑很多。这一点是我理解不了的。
+          </div>
+          <div class="question-text">她认为，买衣服：</div>
+          <select class="answer-select" id="q42">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 应该多调查</option>
+            <option value="B">B - 舒服最重要</option>
+            <option value="C">C - 要买打折的</option>
+            <option value="D">D - 样子要流行</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="question-number">43.</div>
+          <div class="question-text">根据这段话，可以知道什么？</div>
+          <select class="answer-select" id="q43">
+            <option value="">Choose an option...</option>
+            <option value="A">A - 便宜没好货</option>
+            <option value="B">B - 约会别迟到</option>
+            <option value="C">C - 要互相理解</option>
+            <option value="D">D - 适合最重要</option>
+          </select>
+        </div>
+
+        <!-- Questions 44-48 Word Arrangement -->
+        <div class="question">
+          <div class="question-number">44.</div>
+          <div class="sentence-parts">
+            <h4>Arrange these words into a complete sentence:</h4>
+            <div class="parts-list">
+              <span class="part-item">不错</span>
+              <span class="part-item">这台</span>
+              <span class="part-item">质量</span>
+              <span class="part-item">洗衣机</span>
+              <span class="part-item">的</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q44" placeholder="Write the complete sentence...">
+        </div>
+
+        <div class="question">
+          <div class="question-number">45.</div>
+          <div class="sentence-parts">
+            <h4>Arrange these words into a complete sentence:</h4>
+            <div class="parts-list">
+              <span class="part-item">不会</span>
+              <span class="part-item">肯定</span>
+              <span class="part-item">他</span>
+              <span class="part-item">同意你这么做</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q45" placeholder="Write the complete sentence...">
+        </div>
+
+        <div class="question">
+          <div class="question-number">46.</div>
+          <div class="sentence-parts">
+            <h4>Arrange these words into a complete sentence:</h4>
+            <div class="parts-list">
+              <span class="part-item">流行的</span>
+              <span class="part-item">音乐</span>
+              <span class="part-item">这是现在</span>
+              <span class="part-item">最</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q46" placeholder="Write the complete sentence...">
+        </div>
+
+        <div class="question">
+          <div class="question-number">47.</div>
+          <div class="sentence-parts">
+            <h4>Arrange these words into a complete sentence:</h4>
+            <div class="parts-list">
+              <span class="part-item">不得不</span>
+              <span class="part-item">他</span>
+              <span class="part-item">重新</span>
+              <span class="part-item">考虑这件事</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q47" placeholder="Write the complete sentence...">
+        </div>
+
+        <div class="question">
+          <div class="question-number">48.</div>
+          <div class="sentence-parts">
+            <h4>Arrange these words into a complete sentence:</h4>
+            <div class="parts-list">
+              <span class="part-item">普通话</span>
+              <span class="part-item">不太</span>
+              <span class="part-item">我的</span>
+              <span class="part-item">说得</span>
+              <span class="part-item">标准</span>
+            </div>
+          </div>
+          <input type="text" class="answer-input" id="q48" placeholder="Write the complete sentence...">
+        </div>
+      </div>
+
+      <button class="save-btn" onclick="saveAnswers()">Save Answers</button>
+    </div>
+  </div>
+
+  <script>
+    // Lesson data structure for easy content management
+    const lessonData = {
+      HSK4: {
+        1: { title: "Lesson 1", content: "<!-- Lesson 1 content goes here -->" },
+        2: { title: "Lesson 2", content: "<!-- Lesson 2 content goes here -->" },
+        3: { title: "Lesson 3", content: "<!-- Lesson 3 content goes here -->" },
+        4: { title: "Lesson 4", content: "<!-- Lesson 4 content goes here -->" },
+        5: { title: "Lesson 5", content: "current" }, // Current lesson
+        6: { title: "Lesson 6", content: "<!-- Lesson 6 content goes here -->" },
+        // Add lessons 7-20 here
+      },
+      HSK5: {
+        1: { title: "Lesson 1", content: "<!-- HSK5 Lesson 1 content goes here -->" },
+        // Add HSK5 lessons here
+      }
+    };
+
+    let currentLevel = 'HSK4';
+    let currentLesson = 5;
+
+    function selectLevel(level) {
+      currentLevel = level;
+      
+      // Update active button
+      document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      // Reset to lesson 1 when switching levels
+      selectLesson(1);
+    }
+
+    function selectLesson(lessonNum) {
+      currentLesson = lessonNum;
+      
+      // Update active button
+      document.querySelectorAll('.lesson-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      // Load lesson content
+      loadLessonContent(currentLevel, lessonNum);
+    }
+
+    function loadLessonContent(level, lessonNum) {
+      const contentContainer = document.getElementById('lesson-content');
+      
+      // For now, only lesson 5 has content
+      if (level === 'HSK4' && lessonNum === 5) {
+        // Content is already loaded
+        return;
+      }
+      
+      // For other lessons, show placeholder
+      contentContainer.innerHTML = `
+        <div style="text-align: center; padding: 50px; color: #666;">
+          <h3>${level} - Lesson ${lessonNum}</h3>
+          <p>Content for this lesson will be added here.</p>
+          <p style="margin-top: 20px; font-size: 0.9rem;">
+            To add content: Update the lessonData object in the script section
+          </p>
+        </div>
+      `;
+    }
+
+    function saveAnswers() {
+      const answers = {};
+      
+      // Collect dropdown answers
+      for (let i = 23; i <= 43; i++) {
+        const select = document.getElementById(`q${i}`);
+        if (select) answers[`q${i}`] = select.value;
+      }
+      
+      // Collect text input answers
+      for (let i = 31; i <= 34; i++) {
+        const input = document.getElementById(`q${i}`);
+        if (input) answers[`q${i}`] = input.value;
+      }
+      
+      for (let i = 44; i <= 48; i++) {
+        const input = document.getElementById(`q${i}`);
+        if (input) answers[`q${i}`] = input.value;
+      }
+      
+      // Collect notes
+      answers.vocabularyNotes = document.getElementById('vocabulary-notes').value;
+      answers.grammarNotes = document.getElementById('grammar-notes').value;
+      
+      console.log(`Saving ${currentLevel} Lesson ${currentLesson}:`, answers);
+      
+      // Show success message
+      const btn = event.target;
+      const originalText = btn.textContent;
+      btn.textContent = 'Saved!';
+      btn.style.background = '#28a745';
+      
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '#ff6b6b';
+      }, 2000);
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set focus styles
+      document.querySelectorAll('.answer-input, .answer-select, .note-textarea').forEach(element => {
+        element.addEventListener('focus', function() {
+          this.style.borderColor = '#ff6b6b';
+        });
+        
+        element.addEventListener('blur', function() {
+          this.style.borderColor = '#ddd';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

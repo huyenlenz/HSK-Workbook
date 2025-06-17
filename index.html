@@ -1075,7 +1075,11 @@ lesson7: {
             if (questionInfo.type === "select") {
               const select = document.getElementById(`q${i}`);
               if (select && select.value) {
-                answer = select.value;
+                // Get the full text of the selected option instead of just the value
+                const selectedOption = select.options[select.selectedIndex];
+                if (selectedOption && selectedOption.text !== "Choose an option...") {
+                  answer = selectedOption.text;
+                }
               }
             } else if (questionInfo.type === "input") {
               const input = document.getElementById(`q${i}`);
